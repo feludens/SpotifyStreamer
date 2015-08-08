@@ -1,8 +1,6 @@
 package com.spadatech.spotifystreamer.activities;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +9,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.spadatech.spotifystreamer.adapters.TracksArrayAdapter;
-import com.spadatech.spotifystreamer.helpers.BitmapUtil;
 import com.spadatech.spotifystreamer.models.MyTracks;
 import com.spadatech.spotifystreamer.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,11 +103,8 @@ public class TopTracksActivity extends AppCompatActivity {
                     track.setName(item.name);
                     track.setAlbum(item.album.name);
                     if (item.album.images.size() > 0) {
-                        final String url = item.album.images.get(0).url;
-                        new DownloadAlbumCover(track).execute(url);
-                    } else {
-                        Bitmap bitmap = BitmapUtil.INSTANCE.getPlaceholder();
-                        track.setCoverImage(bitmap);
+                        String url = item.album.images.get(0).url;
+                        track.setCoverImg(url);
                     }
                     mTracks.add(track);
                 }
@@ -123,45 +116,6 @@ public class TopTracksActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Ops, no tracks found. Try again!", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private class DownloadAlbumCover extends AsyncTask<String, Void, Void>{
-
-        MyTracks track;
-        Bitmap coverImage;
-
-        public DownloadAlbumCover(MyTracks track){
-            this.track = track;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if(!ppDialog.isShowing()) {
-                ppDialog.show();
-            }
-        }
-
-        @Override
-        protected Void doInBackground(String... url) {
-            try {
-                coverImage = BitmapUtil.INSTANCE.decodeUrl(url[0]);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            track.setCoverImage(coverImage);
-            adapter.notifyDataSetChanged();
-            if(ppDialog.isShowing()) {
-                ppDialog.dismiss();
-            }
-        }
     }
 
     @Override

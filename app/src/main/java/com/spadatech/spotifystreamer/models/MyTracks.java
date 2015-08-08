@@ -14,37 +14,36 @@ public class MyTracks implements Parcelable {
     private String album;
     private String coverImg;
 
-    public String getName() {
-        return name;
+    public MyTracks() {
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    ////////////////
+    //  Getters  //
+    ///////////////
 
-    public Bitmap getCoverImage() {
-        return coverImage;
-    }
+    public String getName() { return name; }
 
-    public void setCoverImage(Bitmap coverImage) {
-        this.coverImage = coverImage;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
+    public String getAlbum() { return album; }
 
     public String getCoverImg() {
         return coverImg;
     }
 
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
+    ////////////////
+    //  Setters  //
+    ///////////////
+
+    public void setName(String name) { this.name = name; }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
+
+    public void setCoverImg(String coverImg) { this.coverImg = coverImg; }
+
+    //////////////////////////
+    //  Parcelable Methods  //
+    //////////////////////////
 
     @Override
     public int describeContents() {
@@ -53,25 +52,26 @@ public class MyTracks implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeParcelable(this.coverImage, 0);
-        dest.writeString(this.album);
-    }
-
-    public MyTracks() {
+        dest.writeString(name);
+        dest.writeParcelable(coverImage, flags);
+        dest.writeString(album);
+        dest.writeString(coverImg);
     }
 
     protected MyTracks(Parcel in) {
-        this.name = in.readString();
-        this.coverImage = in.readParcelable(Bitmap.class.getClassLoader());
-        this.album = in.readString();
+        name = in.readString();
+        coverImage = in.readParcelable(Bitmap.class.getClassLoader());
+        album = in.readString();
+        coverImg = in.readString();
     }
 
     public static final Creator<MyTracks> CREATOR = new Creator<MyTracks>() {
-        public MyTracks createFromParcel(Parcel source) {
-            return new MyTracks(source);
+        @Override
+        public MyTracks createFromParcel(Parcel in) {
+            return new MyTracks(in);
         }
 
+        @Override
         public MyTracks[] newArray(int size) {
             return new MyTracks[size];
         }

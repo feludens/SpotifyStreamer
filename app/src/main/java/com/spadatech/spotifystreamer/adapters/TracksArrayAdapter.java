@@ -1,7 +1,6 @@
 package com.spadatech.spotifystreamer.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 public class TracksArrayAdapter extends ArrayAdapter<MyTracks> {
 
     public Context context;
-    public Bitmap bitmap;
     ArrayList<MyTracks> myTracks;
 
     public TracksArrayAdapter(Context context, ArrayList<MyTracks> myTracks) {
@@ -45,8 +43,12 @@ public class TracksArrayAdapter extends ArrayAdapter<MyTracks> {
         // Populate the data into the template view using the data object
         tvTrackName.setText(track.getName());
         tvAlbumName.setText(track.getAlbum());
-        imCover.setImageBitmap(track.getCoverImage());
-        //Picasso.with(context).load(track.).into(imageView);
+
+        Picasso.with(context)
+                .load(track.getCoverImg())
+                .placeholder(R.drawable.album_art_missing)
+                .into(imCover);
+
         // Return the completed view to render on screen
         return convertView;
     }

@@ -28,17 +28,20 @@ public class ArtistArrayAdapter extends ArrayAdapter<ArtistResults> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         ArtistResults album = getItem(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_artist_search, parent, false);
         }
+
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.artistName);
         ImageView imCover = (ImageView) convertView.findViewById(R.id.coverPicture);
+
         // Populate the data into the template view using the data object
         tvName.setText(album.getName());
-        //imCover.setImageBitmap(album.getAlbumCover());
         Picasso.with(context).load(album.getCoverImg()).placeholder(R.drawable.album_art_missing).into(imCover);
+
         // Return the completed view to render on screen
         return convertView;
     }

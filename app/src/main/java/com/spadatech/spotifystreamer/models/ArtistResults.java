@@ -1,6 +1,5 @@
 package com.spadatech.spotifystreamer.models;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,41 +9,56 @@ import android.os.Parcelable;
 public class ArtistResults implements Parcelable {
 
     private String name;
-    private Bitmap albumCover;
     private String artistId;
     private String coverImg;
 
-    public String getName() {
-        return name;
+    public ArtistResults() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    ////////////////
+    //  Getters  //
+    ///////////////
+
+
+    public String getName() { return name; }
+
+    public String getArtistId() { return artistId; }
+
+    public String getCoverImg() { return coverImg; }
+
+    ////////////////
+    //  Setters  //
+    ///////////////
+
+    public void setName(String name) { this.name = name; }
+
+    public void setArtistId(String artistId) { this.artistId = artistId; }
+
+    public void setCoverImg(String coverImg) { this.coverImg = coverImg; }
+
+    //////////////////////////
+    //  Parcelable Methods  //
+    //////////////////////////
+
+
+
+    protected ArtistResults(Parcel in) {
+        name = in.readString();
+        artistId = in.readString();
+        coverImg = in.readString();
     }
 
-    public Bitmap getAlbumCover() {
-        return albumCover;
-    }
+    public static final Creator<ArtistResults> CREATOR = new Creator<ArtistResults>() {
+        @Override
+        public ArtistResults createFromParcel(Parcel in) {
+            return new ArtistResults(in);
+        }
 
-    public void setAlbumCover(Bitmap albumCover) {
-        this.albumCover = albumCover;
-    }
-
-    public String getArtistId() {
-        return artistId;
-    }
-
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
-    }
-
-    public String getCoverImg() {
-        return coverImg;
-    }
-
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
-    }
+        @Override
+        public ArtistResults[] newArray(int size) {
+            return new ArtistResults[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -53,27 +67,9 @@ public class ArtistResults implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeParcelable(this.albumCover, 0);
-        dest.writeString(this.artistId);
+        dest.writeString(name);
+        dest.writeString(artistId);
+        dest.writeString(coverImg);
     }
 
-    public ArtistResults() {
-    }
-
-    protected ArtistResults(Parcel in) {
-        this.name = in.readString();
-        this.albumCover = in.readParcelable(Bitmap.class.getClassLoader());
-        this.artistId = in.readString();
-    }
-
-    public static final Creator<ArtistResults> CREATOR = new Creator<ArtistResults>() {
-        public ArtistResults createFromParcel(Parcel source) {
-            return new ArtistResults(source);
-        }
-
-        public ArtistResults[] newArray(int size) {
-            return new ArtistResults[size];
-        }
-    };
 }

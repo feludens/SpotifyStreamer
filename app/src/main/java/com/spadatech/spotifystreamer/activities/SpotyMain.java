@@ -3,14 +3,10 @@ package com.spadatech.spotifystreamer.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -24,7 +20,6 @@ import android.widget.Toast;
 
 import com.spadatech.spotifystreamer.R;
 import com.spadatech.spotifystreamer.adapters.ArtistArrayAdapter;
-import com.spadatech.spotifystreamer.helpers.BitmapUtil;
 import com.spadatech.spotifystreamer.models.ArtistResults;
 
 import java.util.ArrayList;
@@ -67,7 +62,6 @@ public class SpotyMain extends AppCompatActivity {
         setContentView(R.layout.activity_spoty_main);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        BitmapUtil.INSTANCE.setContext(getApplicationContext());
 
         albumsList = (ListView) findViewById(R.id.lvAlbums);
         etSearchArtist = (EditText) findViewById(R.id.etSearchArtist);
@@ -153,12 +147,8 @@ public class SpotyMain extends AppCompatActivity {
                     artistResults.setName(element.name);
                     artistResults.setArtistId(element.id);
                     if (element.images.size() > 0) {
-                        artistResults.setCoverImg(element.images.get(0).url);
-                        final String url = element.images.get(0).url;
-                        new DownloadAlbumCover(artistResults).execute(url);
-                    } else {
-                        Bitmap bitmap = BitmapUtil.INSTANCE.getPlaceholder();
-                        artistResults.setAlbumCover(bitmap);
+                        String url = element.images.get(0).url;
+                        artistResults.setCoverImg(url);
                     }
                     mArtistResults.add(artistResults);
                 }
@@ -170,45 +160,6 @@ public class SpotyMain extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Ops, no albums found. Try again!", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private class DownloadAlbumCover extends AsyncTask<String, Void, Void> {
-
-        ArtistResults album;
-        Bitmap coverImage;
-
-        public DownloadAlbumCover(ArtistResults album){
-            this.album = album;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            if(!pDialog.isShowing()) {
-                pDialog.show();
-            }
-        }
-
-        @Override
-        protected Void doInBackground(String... url) {
-            try {
-                coverImage = BitmapUtil.INSTANCE.decodeUrl(url[0]);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            album.setAlbumCover(coverImage);
-            adapter.notifyDataSetChanged();
-            if(pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-        }
     }
 
     @Override
