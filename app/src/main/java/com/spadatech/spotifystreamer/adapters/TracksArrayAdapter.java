@@ -36,16 +36,16 @@ public class TracksArrayAdapter extends ArrayAdapter<MyTracks> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_top_tracks, parent, false);
         }
         // Lookup view for data population
-        TextView tvTrackName = (TextView) convertView.findViewById(R.id.trackName);
-        TextView tvAlbumName = (TextView) convertView.findViewById(R.id.albumName);
-        ImageView imCover = (ImageView) convertView.findViewById(R.id.trackPicture);
+        TextView tvTrackName = (TextView) convertView.findViewById(R.id.tv_track_name);
+        TextView tvAlbumName = (TextView) convertView.findViewById(R.id.tv_album_name);
+        ImageView imCover = (ImageView) convertView.findViewById(R.id.iv_track_picture);
 
         // Populate the data into the template view using the data object
         tvTrackName.setText(track.getName());
         tvAlbumName.setText(track.getAlbum());
 
         Picasso.with(context)
-                .load(track.getCoverImg())
+                .load(track.getCoverImgs())
                 .placeholder(R.drawable.album_art_missing)
                 .into(imCover);
 

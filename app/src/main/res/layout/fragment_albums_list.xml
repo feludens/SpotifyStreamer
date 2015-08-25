@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spadatech.spotifystreamer.fragments.AlbumsListFragment">
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lv_albums"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AlbumsListStyle"/>
+
+</FrameLayout>

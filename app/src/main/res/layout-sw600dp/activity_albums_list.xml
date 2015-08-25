@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.spadatech.spotifystreamer.activities.AlbumsListActivity">
+
+    <include layout="@layout/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/include" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:divider="?android:attr/dividerHorizontal"
+        android:orientation="horizontal"
+        >
+
+        <fragment
+            android:id="@+id/fragment_albums"
+            android:name="com.spadatech.spotifystreamer.fragments.AlbumsListFragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            tools:layout="@android:layout/list_content" />
+
+        <FrameLayout
+            android:id="@+id/top_tracks_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4" />
+    </LinearLayout>
+</LinearLayout>

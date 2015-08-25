@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="@string/pref_cc_label"
+        android:key="@string/pref_cc_key"
+        android:defaultValue="@string/pref_cc_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+
+    <CheckBoxPreference
+        android:title="@string/pref_notifications_label"
+        android:key="@string/pref_notifications_key"
+        android:summaryOff="@string/pref_notifications_false"
+        android:summaryOn="@string/pref_notifications_true"
+        android:defaultValue="@string/pref_notifications_default" />
+
+</PreferenceScreen>

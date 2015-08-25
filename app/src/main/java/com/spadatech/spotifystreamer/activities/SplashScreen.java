@@ -21,7 +21,7 @@ public class SplashScreen extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, SpotyMain.class);
+                Intent intent = new Intent(SplashScreen.this, FeaturedActivity.class);
                 startActivity(intent);
                 finish();
             }
